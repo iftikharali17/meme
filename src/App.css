@@ -1,0 +1,25 @@
+#memeContainer {
+  position: relative;
+  text-align: center;
+  color: black;
+  font-size: xx-large;
+  font-weight: bold;
+}
+
+#memeImage {
+  width: 50%;
+}
+
+#topText {
+  position: absolute;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#bottomText {
+  position: absolute;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+}
