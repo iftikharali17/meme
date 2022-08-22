@@ -1,10 +1,10 @@
 import "./App.css";
 
 import React, { useEffect, useState } from "react";
-import FetchApi from "./Components/FetchApi";
+import FetchApi from "./Components/FetchApi"; //Fetch Meme Images
 
 function App() {
-  const [memes, setMemes] = FetchApi();
+  const [memes, setMemes] = FetchApi(); //fetched state variable declaration
   const [selectedMeme, setSelectedMeme] = useState();
   const [text, setText] = useState({
     topText: "",
@@ -16,6 +16,7 @@ function App() {
     bottomText: ""
   });
 
+  //Clears input fields
   const clearInputs = () => {
     setText({
       topText: "",
@@ -23,11 +24,31 @@ function App() {
     });
   };
 
+  //Generates text on the meme image
   const memeText = () => {
     setSubmitted(text);
     clearInputs();
   };
 
+  const nextMeme = () => {
+    const currentIndex = memes.indexOf(selectedMeme);
+    if (currentIndex < memes.length - 1)
+      setSelectedMeme(memes[currentIndex + 1]);
+    else alert("Its already last meme, please try previous meme");
+  };
+
+  const previousMeme = () => {
+    const currentIndex = memes.indexOf(selectedMeme);
+    if (currentIndex > 0)
+      setSelectedMeme(memes[currentIndex - 1]);
+    else alert("Its first meme, please try next meme");
+  };
+
+  const randomMeme = () => {
+    setSelectedMeme(memes[Math.floor(Math.random() * memes.length)]);
+  };
+
+  //checks if user wrote something in the input field
   const onInputChange = (e) => {
     const { name, value } = e.target;
     setText((prev) => ({
@@ -36,6 +57,7 @@ function App() {
     }));
   };
 
+  //initializing first meme
   useEffect(() => {
     setSelectedMeme(memes[0]);
   }, [memes]);
@@ -59,28 +81,11 @@ function App() {
       />
       <button onClick={memeText}>Generate Meme</button>
 
-      <button
-        onClick={() => {
-          const currentIndex = memes.indexOf(selectedMeme);
-          if (currentIndex < memes.length - 1)
-            setSelectedMeme(memes[currentIndex + 1]);
-          else alert("Its already last meme, please try previous meme");
-        }}
-      >
-        Next Meme
-      </button>
+      <button onClick={nextMeme}>Next Meme</button>
 
-      <button onClick={() => {
-        const currentIndex = memes.indexOf(selectedMeme);
-        if (currentIndex > 0) setSelectedMeme(memes[currentIndex - 1]);
-        else alert("Its first meme, please try next meme");
-      }}
-      >Previous Meme</button>
+      <button onClick={previousMeme}>Previous Meme</button>
 
-      <button onClick={() => {
-        setSelectedMeme(memes[Math.floor(Math.random() * memes.length)]);
-      }}
-      >Random Meme</button>
+      <button onClick={randomMeme}>Random Meme</button>
 
       {selectedMeme ? (
         <div id="memeContainer">
